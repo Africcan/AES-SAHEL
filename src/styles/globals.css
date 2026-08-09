@@ -33,6 +33,25 @@ button {
   outline: none;
 }
 
+/* Historical Map Background */
+.map-background {
+  position: relative;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="paper" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="%23D4C5B9"/><path d="M0 0 Q50 50 100 100" stroke="%23C4B5A9" stroke-width="0.5" fill="none"/></pattern></defs><rect width="1200" height="800" fill="%23E8DCC8"/><rect width="1200" height="800" fill="url(%23paper)"/></svg>');
+  background-attachment: fixed;
+}
+
+/* Map overlay texture */
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(139, 90, 43, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(139, 90, 43, 0.03) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 25%, rgba(139, 90, 43, 0.01) 25%, rgba(139, 90, 43, 0.01) 50%, transparent 50%, transparent 75%, rgba(139, 90, 43, 0.01) 75%);
+  background-size: 100% 100%, 100% 100%, 20px 20px;
+  pointer-events: none;
+}
+
 /* Gradient Text */
 .gradient-text {
   background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
@@ -59,12 +78,58 @@ button {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.05) 100%);
   border: 1px solid rgba(255, 215, 0, 0.1);
   border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
 
 .card-dark {
   background: rgba(26, 26, 46, 0.8);
   border: 1px solid rgba(255, 215, 0, 0.05);
   border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Map-themed sections */
+.map-section {
+  position: relative;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+}
+
+.map-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 15% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 70%, rgba(255, 165, 0, 0.05) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Compass decoration */
+.compass {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #FFD700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #FFD700;
+}
+
+.compass::before {
+  content: '⬆';
+  position: absolute;
+  font-size: 24px;
+}
+
+/* Map grid overlay */
+.map-grid {
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(255, 215, 0, 0.03) 25%, rgba(255, 215, 0, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 215, 0, 0.03) 75%, rgba(255, 215, 0, 0.03) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(255, 215, 0, 0.03) 25%, rgba(255, 215, 0, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 215, 0, 0.03) 75%, rgba(255, 215, 0, 0.03) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
 }
 
 /* Animations */
@@ -88,12 +153,47 @@ button {
   }
 }
 
+@keyframes floatPin {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes mapFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-fadeInUp {
   animation: fadeInUp 0.6s ease-out;
 }
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
+}
+
+.animate-float-pin {
+  animation: floatPin 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
 }
 
 /* Scrollbar Styling */
@@ -112,4 +212,24 @@ button {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #ffa500;
+}
+
+/* Historical paper texture overlay */
+.paper-texture {
+  position: relative;
+}
+
+.paper-texture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 2px,
+      rgba(0, 0, 0, 0.02) 4px
+    );
+  pointer-events: none;
 }
